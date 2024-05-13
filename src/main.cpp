@@ -5,10 +5,17 @@
 ** main
 */
 
+#include "Plazza.hpp"
+
+#include <iostream>
+
 int main(int ac, char **av)
 {
-    (void)ac;
-    (void)av;
-
+    try {
+        Plazza::PlazzaParser plazza(ac, av);
+    } catch (Plazza::PlazzaParser::ParserException &e) {
+        std::cerr << e.what() << std::endl;
+        return 84;
+    }
     return 0;
 }
