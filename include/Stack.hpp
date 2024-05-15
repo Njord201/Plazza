@@ -11,8 +11,8 @@
 
 template <typename T>
 class Stack {
-    public:
-    Stack() : _size(0), _capacity(10), _stack(new T[_capacity]) {};
+public:
+    Stack();
     ~Stack();
     void push(T value);
     T pop();
@@ -20,8 +20,8 @@ class Stack {
     bool empty();
     int size();
 
-    private:
-    T *_stack;
+private:
     int _size;
     int _capacity;
+    T *_stack;
 };

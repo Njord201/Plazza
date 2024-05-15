@@ -8,39 +8,42 @@
 #include "Stack.hpp"
 
 template <typename T>
-Stack<T>::~Stack()
-{
+Stack<T>::Stack() : _size(0), _capacity(10), _stack(new T[_capacity]) {}
+
+template <typename T>
+Stack<T>::~Stack() {
     delete[] _stack;
 }
 
 template <typename T>
-void Stack<T>::push(T value)
-{
-    _stack.push(value);
+void Stack<T>::push(T value) {
+    _stack[_size++] = value;
 }
 
 template <typename T>
-T Stack<T>::pop()
-{
-    T value = _stack.top();
-    _stack.pop();
-    return value;
+T Stack<T>::pop() {
+    if (_size <= 0) {
+        throw std::underflow_error("Stack is empty");
+    }
+    return _stack[--_size];
 }
 
 template <typename T>
-T Stack<T>::top()
-{
-    return _stack.top();
+T Stack<T>::top() {
+    if (_size <= 0) {
+        throw std::underflow_error("Stack is empty");
+    }
+    return _stack[_size - 1];
 }
 
 template <typename T>
-bool Stack<T>::empty()
-{
-    return _stack.empty();
+bool Stack<T>::empty() {
+    return _size == 0;
 }
 
 template <typename T>
-int Stack<T>::size()
-{
-    return _stack.size();
+int Stack<T>::size() {
+    return _size;
 }
+
+template class Stack<int>;
