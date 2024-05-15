@@ -12,6 +12,11 @@ Semaphore::Semaphore(int pshared, unsigned int value)
     sem_init(&_sem, pshared, value);
 }
 
+Semaphore::Semaphore(unsigned int value)
+{
+    sem_init(&_sem, 0, value);
+}
+
 Semaphore::~Semaphore()
 {
     sem_destroy(&_sem);

@@ -16,5 +16,6 @@ enum Ingredient {
     STEAK,
     EGGPLANT,
     GOAT_CHEESE,
-    CHIEF_LOVE
+    CHIEF_LOVE,
+    NULL
 };

@@ -14,6 +14,7 @@
 class Semaphore {
 public:
     Semaphore(int pshared, unsigned int value);
+    Semaphore(unsigned int value);
     ~Semaphore();
     void wait();
     void post();

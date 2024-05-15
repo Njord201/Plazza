@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** Plazza
 ** File description:
-** IKitchen.hpp
+** Kitchen.hpp
 */
 
 #pragma once
@@ -20,7 +20,7 @@
 
 class Kitchen {
 public:
-    Kitchen(int nbCooks, int restockTime);
+    Kitchen(int nbCooks, int restockTime, int id);
     ~Kitchen();
     void restock();
     void *cookFunction(void *arg);
@@ -28,18 +28,21 @@ public:
     //internal functions
     //communication functions
 private:
-    std::list<Thread> cooks;
-    Mutex startCooking;
-    MessageQueue orderQueue;
-    MessageQueue finishedPizzasQueue;
-    Semaphore pizzasToCook;
-    Stack<IPizza> pizzasToCook;
+    std::list<Thread> _cooks;
+    Mutex _startCooking;
+    MessageQueue _orderQueue;
+    MessageQueue _finishedPizzasQueue;
+    Semaphore _semPizzasToCook;
+    Stack<IPizza> _stackPizzasToCook;
 
-    std::unordered_map<Ingredient, int> stock;
-    int totalPizzas;
-    int cooksOccupied; //shared memory? -> Socket UNIX?
-    bool saturated; //shared memory? -> Socket UNIX?
+    std::unordered_map<Ingredient, int> _stock;
+    int _totalPizzas;
+    int _cooksOccupied; //shared memory? -> Socket UNIX?
+    bool _saturated; //shared memory? -> Socket UNIX?
 
-    Timer totalTime;
-    Timer idleTime;
+    int _restockTime;
+    int _id;
+
+    Timer _totalTime;
+    Timer _idleTime;
 }
