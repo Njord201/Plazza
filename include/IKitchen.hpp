@@ -14,6 +14,9 @@
 #include "Timer.hpp"
 #include "Ingredient.hpp"
 #include "Semaphore.hpp"
+#include "MessageQueue.hpp"
+#include "Stack.hpp"
+#include "IPizza.hpp"
 
 class Kitchen {
 public:
@@ -27,15 +30,15 @@ public:
 private:
     std::list<Thread> cooks;
     Mutex startCooking;
-    //messageQueue  orderQueue;
-    //pipe finishedPizzas; -> messageQueue
+    MessageQueue orderQueue;
+    MessageQueue finishedPizzasQueue;
     Semaphore pizzasToCook;
-    //stack pizzasToCook; -> socket UNIX
+    Stack<IPizza> pizzasToCook;
 
     std::unordered_map<Ingredient, int> stock;
     int totalPizzas;
-    int cooksOccupied; //shared memory?
-    bool saturated; //shared memory?
+    int cooksOccupied; //shared memory? -> Socket UNIX?
+    bool saturated; //shared memory? -> Socket UNIX?
 
     Timer totalTime;
     Timer idleTime;
