@@ -8,6 +8,8 @@
 #pragma once
 
 #include <semaphore.h>
+#include <time.h>
+#include <iostream>
 
 class Semaphore {
 public:
@@ -16,7 +18,6 @@ public:
     void wait();
     void post();
     void trywait();
-    void timedwait(const struct timespec *restrict abstime);
     int getvalue();
     sem_t *getsem();
     void setsem(sem_t sem);

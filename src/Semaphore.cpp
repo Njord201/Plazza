@@ -32,11 +32,6 @@ void Semaphore::trywait()
     sem_trywait(&_sem);
 }
 
-void Semaphore::timedwait(const struct timespec *restrict abstime)
-{
-    sem_timedwait(&_sem, abstime);
-}
-
 int Semaphore::getvalue()
 {
     int value;

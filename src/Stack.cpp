@@ -7,11 +7,10 @@
 
 #include "Stack.hpp"
 
-Stack::~Stack()
+template <typename T>
+Stack<T>::~Stack()
 {
-    while (!_stack.empty()) {
-        _stack.pop();
-    }
+    delete[] _stack;
 }
 
 template <typename T>

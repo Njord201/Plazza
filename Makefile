@@ -6,7 +6,13 @@
 ##
 
 # Main file
-MAIN		=	src/main.cpp
+MAIN		=	src/main.cpp \
+				src/MessageQueue.cpp \
+				src/Mutex.cpp \
+				src/Semaphore.cpp \
+				src/Stack.cpp \
+				src/Timer.cpp \
+				src/Thread.cpp
 MAIN_OBJ	=	$(MAIN:.cpp=.o)
 
 # Sources
@@ -32,7 +38,7 @@ TEST_GCNO 	=	$(SRC:.c=.gcno)
 NAME 	=	plazza
 
 # Flags
-IFLAGS 	=	-I./includes
+IFLAGS 	=	-I./include
 CFLAGS 	=	-Wall -Wextra -Werror
 
 # Compiler

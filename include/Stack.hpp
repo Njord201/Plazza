@@ -12,7 +12,7 @@
 template <typename T>
 class Stack {
     public:
-    Stack() : _size(0), _capacity(10), _stack(new T[_capacity]) {}
+    Stack() : _size(0), _capacity(10), _stack(new T[_capacity]) {};
     ~Stack();
     void push(T value);
     T pop();

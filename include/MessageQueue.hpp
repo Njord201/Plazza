@@ -8,6 +8,7 @@
 #pragma once
 
 #include <mqueue.h>
+#include <cstring>
 
 class MessageQueue {
     public:
