@@ -7,7 +7,6 @@
 
 #pragma once
 
-//pack
 enum Ingredient {
     DOUGH,
     TOMATO,

@@ -15,7 +15,8 @@ SRC_FILES 	=	MessageQueue.cpp \
 				Semaphore.cpp \
 				Stack.cpp \
 				Timer.cpp \
-				Thread.cpp
+				Thread.cpp \
+				APizza.cpp \
 
 SRC_DIR 	=	src/
 SRC		=	$(addprefix $(SRC_DIR), $(SRC_FILES))
