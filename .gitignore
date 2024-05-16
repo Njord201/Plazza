@@ -31,3 +31,9 @@
 *.out
 *.app
 plazza
+
+# Debug
+vgcore.*
+
+# Visual Studio files
+.vscode/
