@@ -10,7 +10,8 @@ MAIN		=	src/main.cpp
 MAIN_OBJ	=	$(MAIN:.cpp=.o)
 
 # Sources
-SRC_FILES 	=	\
+SRC_FILES 	=	Parsing/Input.cpp	\
+				Pizza.cpp			\
 
 SRC_DIR 	=	src/
 SRC		=	$(addprefix $(SRC_DIR), $(SRC_FILES))
@@ -32,7 +33,7 @@ TEST_GCNO 	=	$(SRC:.c=.gcno)
 NAME 	=	plazza
 
 # Flags
-IFLAGS 	=	-I./includes
+IFLAGS 	=	-I./include
 CFLAGS 	=	-Wall -Wextra -Werror
 
 # Compiler
