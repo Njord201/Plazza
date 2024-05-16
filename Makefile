@@ -10,8 +10,8 @@ MAIN		=	src/main.cpp
 MAIN_OBJ	=	$(MAIN:.cpp=.o)
 
 # Sources
-SRC_FILES 	=	Parsing/Plazza.cpp
-SRC_FILES 	=	Parsing/Input.cpp	\
+SRC_FILES 	=	Parsing/Plazza.cpp	\
+				Parsing/Input.cpp	\
 				Pizza.cpp			\
 
 SRC_DIR 	=	src/
