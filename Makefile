@@ -17,6 +17,9 @@ SRC_FILES 	=	MessageQueue.cpp \
 				Timer.cpp \
 				Thread.cpp \
 				APizza.cpp \
+        Parsing/Plazza.cpp	\
+				Parsing/Input.cpp	\
+				Pizza.cpp			\
 
 SRC_DIR 	=	src/
 SRC		=	$(addprefix $(SRC_DIR), $(SRC_FILES))
