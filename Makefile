@@ -10,7 +10,14 @@ MAIN		=	src/main.cpp
 MAIN_OBJ	=	$(MAIN:.cpp=.o)
 
 # Sources
-SRC_FILES 	=	Parsing/Plazza.cpp	\
+SRC_FILES 	=	MessageQueue.cpp \
+				Mutex.cpp \
+				Semaphore.cpp \
+				Stack.cpp \
+				Timer.cpp \
+				Thread.cpp \
+				APizza.cpp \
+        Parsing/Plazza.cpp	\
 				Parsing/Input.cpp	\
 				Pizza.cpp			\
 
@@ -21,14 +28,14 @@ SRC_OBJ	=	$(SRC:.cpp=.o)
 OBJ		= $(SRC_OBJ) $(MAIN_OBJ)
 
 # Tests
-TEST_FILES 	=	\
+TEST_FILES 	=	TestStack.cpp
 
 TEST_DIR 	=	tests/
 TEST		=	$(addprefix $(TEST_DIR), $(TEST_FILES))
-TEST_OBJ	=	$(TEST:.c=.o)
-TEST_FLAGS	=	--coverage -lcriterion
-TEST_GCDA 	=	$(SRC:.c=.gcda)
-TEST_GCNO 	=	$(SRC:.c=.gcno)
+TEST_OBJ	=	$(TEST:.cpp=.o)
+TEST_FLAGS	=	--coverage -lcriterion -I./include
+TEST_GCDA 	=	$(SRC:.cpp=.gcda)
+TEST_GCNO 	=	$(SRC:.cpp=.gcno)
 
 # Binary
 NAME 	=	plazza
