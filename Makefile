@@ -10,14 +10,14 @@ MAIN		=	src/main.cpp
 MAIN_OBJ	=	$(MAIN:.cpp=.o)
 
 # Sources
-SRC_FILES 	=	MessageQueue.cpp \
-				Mutex.cpp \
-				Semaphore.cpp \
-				Stack.cpp \
-				Timer.cpp \
-				Thread.cpp \
+SRC_FILES 	=	Utils/MessageQueue.cpp \
+				Utils/Mutex.cpp \
+				Utils/Semaphore.cpp \
+				Utils/Stack.cpp \
+				Utils/Timer.cpp \
+				Utils/Thread.cpp \
 				APizza.cpp \
-        Parsing/Plazza.cpp	\
+        		Parsing/Plazza.cpp	\
 				Parsing/Input.cpp	\
 				Pizza.cpp			\
 
