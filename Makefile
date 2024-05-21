@@ -10,16 +10,16 @@ MAIN		=	src/main.cpp
 MAIN_OBJ	=	$(MAIN:.cpp=.o)
 
 # Sources
-SRC_FILES 	=	MessageQueue.cpp \
-				Mutex.cpp \
-				Semaphore.cpp \
-				Stack.cpp \
-				Timer.cpp \
-				Thread.cpp \
-				APizza.cpp \
-        Parsing/Plazza.cpp	\
-				Parsing/Input.cpp	\
-				Pizza.cpp			\
+SRC_FILES 	=	MessageQueue.cpp			\
+				Mutex.cpp 					\
+				Semaphore.cpp 				\
+				Stack.cpp 					\
+				Timer.cpp 					\
+				Thread.cpp 					\
+				APizza.cpp 					\
+        		Parsing/PlazzaParser.cpp	\
+				Parsing/Input.cpp			\
+				Pizza.cpp					\
 
 SRC_DIR 	=	src/
 SRC		=	$(addprefix $(SRC_DIR), $(SRC_FILES))
