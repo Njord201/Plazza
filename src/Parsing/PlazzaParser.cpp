@@ -5,7 +5,7 @@
 ** Plazza
 */
 
-#include "Plazza.hpp"
+#include "PlazzaParser.hpp"
 
 #include <stdexcept>
 
