@@ -18,8 +18,8 @@ PlazzaParser::PlazzaParser(int argc, char **argv)
 
     try {
         _timeMultiplier = std::stod(argv[1]);
-        if (_timeMultiplier < 0 || _timeMultiplier > 1)
-            throw PlazzaParser::ParserException("Error: Invalid time multiplier, must be between 0 and 1");
+        if (_timeMultiplier < 0)
+            throw PlazzaParser::ParserException("Error: Invalid time multiplier, must be positive values");
     } catch (std::invalid_argument &e) {
         throw PlazzaParser::ParserException("Error: Invalid time multiplier, must be a valid number");
     }
