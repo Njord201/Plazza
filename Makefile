@@ -20,6 +20,8 @@ SRC_FILES 	=	MessageQueue.cpp			\
         		Parsing/PlazzaParser.cpp	\
 				Parsing/Input.cpp			\
 				Pizza.cpp					\
+				SocketUnix/Server.cpp		\
+				SocketUnix/Client.cpp		\
 
 SRC_DIR 	=	src/
 SRC		=	$(addprefix $(SRC_DIR), $(SRC_FILES))

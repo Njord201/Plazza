@@ -58,8 +58,6 @@ void SocketU::Server::accept()
 
 void SocketU::Server::selectWriteRead()
 {
-    struct timeval tv;
-
     FD_ZERO(&this->_readfds);
     FD_ZERO(&this->_writefds);
     for (int client : this->_clients) {
@@ -68,8 +66,6 @@ void SocketU::Server::selectWriteRead()
     for (int client : this->_clients) {
         FD_SET(client, &this->_writefds);
     }
-    tv.tv_sec = 5;
-    tv.tv_usec = 0;
     if (::select(FD_SETSIZE, &this->_readfds, &this->_writefds, NULL, NULL) == -1) {
         throw std::runtime_error("Error: select failed");
     }
