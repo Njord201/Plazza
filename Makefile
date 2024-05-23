@@ -20,6 +20,7 @@ SRC_FILES 	=	Utils/MessageQueue.cpp \
         		Parsing/Plazza.cpp	\
 				Parsing/Input.cpp	\
 				Pizza.cpp			\
+				Kitchen.cpp			\
 
 SRC_DIR 	=	src/
 SRC		=	$(addprefix $(SRC_DIR), $(SRC_FILES))

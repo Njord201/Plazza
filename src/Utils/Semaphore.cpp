@@ -17,6 +17,11 @@ Semaphore::Semaphore(unsigned int value)
     sem_init(&_sem, 0, value);
 }
 
+Semaphore::Semaphore()
+{
+    sem_init(&_sem, 0, 0);
+}
+
 Semaphore::~Semaphore()
 {
     sem_destroy(&_sem);

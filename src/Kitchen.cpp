@@ -7,41 +7,40 @@
 
 #include "Kitchen.hpp"
 
+static void *cookFunction(void *arg)
+{
+    return arg;
+}
+
 Kitchen::Kitchen(int nbCooks, int restockTime, int id)
 {
     _id = id;
     _restockTime = restockTime;
 
+    _cooks = std::list<std::unique_ptr<Thread>>();
     for (int i = 0; i < nbCooks; i++) {
-        _cooks.push_back(new Cook());
+        _cooks.push_back(std::make_unique<Thread>(&cookFunction, nullptr));
     }
     int i = 0;
-    while (i < Ingredient::NULL) {
+    while (i < Ingredient::INGREDIENTS) {
         _stock.insert(std::pair<Ingredient, int>((Ingredient)i, 5));
         i++;
     }
-    _startCooking = new Mutex();
-    _orderQueue = new MessageQueue();
-    _finishedPizzasQueue = new MessageQueue();
-    _semPizzasToCook = new Semaphore(2 * nbCooks);
-    _stackPizzasToCook = new Stack<IPizza>();
+    _startCooking = std::make_unique<Mutex>();
+    _orderQueue = std::make_unique<MessageQueue>();
+    _finishedPizzasQueue = std::make_unique<MessageQueue>();
+    _semPizzasToCook = std::make_unique<Semaphore>(2 * nbCooks);
+    _stackPizzasToCook = std::make_unique<Stack<APizza>>();
     _totalPizzas = 0;
     _cooksOccupied = 0;
     _saturated = false;
-    _totalTime = new Timer();
-    _idleTime = new Timer();
+    _refillTime = std::make_unique<Timer>();
+    _idleTime = std::make_unique<Timer>();
 }
 
 Kitchen::~Kitchen()
 {
-    delete _startCooking;
-    delete _orderQueue;
-    delete _finishedPizzasQueue;
-    delete _semPizzasToCook;
-    delete _stackPizzasToCook;
-    for (auto cook : _cooks) {
-        delete cook;
-    }
+
 }
 
 void Kitchen::restock()
@@ -51,7 +50,12 @@ void Kitchen::restock()
     }
 }
 
-void *Kitchen::cookFunction(void *arg)
+/*void Kitchen::loop()
 {
-    //TO DO
-}
+    //timers
+    if (_refillTime->getElapsedTime() > _restockTime) {
+        restock();
+        _refillTime->reset();
+    }
+    //get si quelque chose dans la msg queue
+}*/

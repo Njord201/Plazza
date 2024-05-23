@@ -40,15 +40,13 @@ public:
 
     /**
      * @brief Packs the pizza.
-     * @note Pure virtual function, must be implemented by derived classes.
      */
-    void packPizza() = 0;
+    void packPizza();
 
     /**
      * @brief Cooks the pizza.
-     * @note Pure virtual function, must be implemented by derived classes.
      */
-    void cook() = 0;
+    void cook();
 
     /**
      * @brief Gets the type of the pizza.

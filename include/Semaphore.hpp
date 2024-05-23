@@ -31,6 +31,11 @@ public:
     Semaphore(unsigned int value);
 
     /**
+     * @brief Constructs a Semaphore object.
+     */
+    Semaphore();
+
+    /**
      * @brief Destructs the Semaphore object.
      */
     ~Semaphore();
