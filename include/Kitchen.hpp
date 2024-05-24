@@ -47,6 +47,13 @@ public:
      */
     void *cookFunction(void *arg);
 
+    /**
+     * @brief Get the id of the object.
+     *
+     * @return int
+     */
+    int getId() const;
+
     //getters and setters
 
     //internal functions

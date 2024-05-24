@@ -55,3 +55,8 @@ void *Kitchen::cookFunction(void *arg)
 {
     //TO DO
 }
+
+int Kitchen::getId() const
+{
+    return _id;
+}
