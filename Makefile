@@ -21,6 +21,9 @@ SRC_FILES 	=	Utils/MessageQueue.cpp \
 				Parsing/Input.cpp	\
 				Pizza.cpp			\
 				Kitchen.cpp			\
+				SocketUnix/Server.cpp	\
+				SocketUnix/Client.cpp	\
+
 
 SRC_DIR 	=	src/
 SRC		=	$(addprefix $(SRC_DIR), $(SRC_FILES))
