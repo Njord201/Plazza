@@ -72,7 +72,7 @@ class Plazza::Reception {
          * @brief Assign a pizza to a kitchen.
          *
          */
-        void assignPizzaToKitchen(int idKitchen, const Plazza::APizza &pizza);
+        void assignPizzaToKitchen(int idKitchen, Plazza::APizza pizza);
 
         /**
          * @brief Get the state of the kitchens.
@@ -88,7 +88,7 @@ class Plazza::Reception {
 
         void status();
 
-        std::vector<std::pair<int, int>>        _kitchens;      /** Lists of id and fd of Kitchens handle by the reception */
+        std::vector<std::pair<std::shared_ptr<Kitchen>, int>>    _kitchens;      /** Lists of Kitchen and fd of Kitchens handle by the reception */
         std::vector<std::shared_ptr<Order>>     _orders;        /** Lists of the current order */
         std::unique_ptr<InputParser>            _input;         /** Parser of the user input */
         std::vector<std::pair<int, int>>        _stateKitchens; /** State of the kitchens, <id, empty pizza slot> */

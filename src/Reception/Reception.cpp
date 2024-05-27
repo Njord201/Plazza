@@ -15,7 +15,7 @@ Plazza::Reception::Reception()
 {
     _input = std::make_unique<Plazza::InputParser>();
     _server = std::make_unique<SocketU::Server>();
-    _kitchens = std::vector<std::pair<int, int>>();
+    _kitchens = std::vector<std::pair<std::shared_ptr<Kitchen>, int>>();
     _stateKitchens = std::vector<std::pair<int, int>>();
 }
 
@@ -30,7 +30,7 @@ void Plazza::Reception::status()
 {
     // TODO
     for (const auto &kitchen : _kitchens) {
-        std::cout << "Kitchen " << kitchen.first << ": " << "..." << std::endl;
+        std::cout << "Kitchen " << kitchen.second << ": " << "..." << std::endl;
     }
 }
 
@@ -94,7 +94,7 @@ void Plazza::Reception::createKitchen()
         exit(0);
     } else {
         std::cout << "Kitchen created: " << fd << std::endl;
-        auto pair = std::make_pair(fd, fd);
+        auto pair = std::make_pair(kitchen, fd);
         _kitchens.push_back(pair);
     }
 }
@@ -109,12 +109,17 @@ void Plazza::Reception::closeOrder()
 
 }
 
-void Plazza::Reception::assignPizzaToKitchen(int idKitchen, const Plazza::APizza &pizza)
+void Plazza::Reception::assignPizzaToKitchen(int idKitchen, Plazza::APizza pizza)
 {
-    FD_ZERO(&_server->_writefds);
-    FD_SET(_kitchens[idKitchen].second, &_server->_writefds);
-    _server->selectWrite();
-    _server->send(pizza.getInfos(), _kitchens[idKitchen].second);
+    // FD_ZERO(&_server->_writefds);
+    // FD_SET(_kitchens[idKitchen].second, &_server->_writefds);
+    // // _server->selectWrite();
+    // _server->send(pizza.getInfos(), _kitchens[idKitchen].second);
+    for (auto &kitchen : _kitchens) {
+        if (kitchen.second == idKitchen) {
+            kitchen.first->getOrderQueue()->sendPizza(&pizza);
+        }
+    }
     std::cout << "Pizza sent: " << pizza.getInfos() << std::endl;
 }
 
@@ -126,7 +131,7 @@ void Plazza::Reception::getStateKitchens()
         _server->selectRead();
         std::string state = _server->receive(getpid());
         std::cout << "State: " << state << std::endl;
-        int id = kitchen.first;
+        int id = kitchen.second;
         // std::string state = "2";
         int pizzaSlot = stoi(state);
 
