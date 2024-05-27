@@ -28,6 +28,9 @@ int main(int ac, char **av)
         while(kitchen.loop() == 0);
     } else {
         Plazza::InputParser parser = Plazza::InputParser();
+
+        //debug
+        kitchen.getOrderQueue()->sendPizza(new APizza());
         while (1) {
             try {
                 parser.parseLine();

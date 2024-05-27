@@ -46,6 +46,11 @@ APizza *MessageQueue::receivePizza()
     return reinterpret_cast<APizza *>(message);
 }
 
+void MessageQueue::sendPizza(APizza *pizza)
+{
+    mq_send(_queue, reinterpret_cast<char *>(pizza), sizeof(APizza), 0);
+}
+
 void MessageQueue::closeQueue()
 {
     mq_close(_queue);

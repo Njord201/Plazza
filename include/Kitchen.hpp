@@ -42,6 +42,8 @@ public:
 
     //getters and setters
 
+    std::unique_ptr<MessageQueue> &getOrderQueue() { return _orderQueue; }
+
     //internal functions
 
     /**

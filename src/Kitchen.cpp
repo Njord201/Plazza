@@ -61,11 +61,18 @@ int Kitchen::loop()
         return 1;
     }
     if (_orderQueue->size() > 0) {
+        _idleTime->reset();
+
         //get order
         APizza *order = _orderQueue->receivePizza();
 
         //check if enough ingredients
-        order->packPizza(_stock);
+        if (!order->packPizza(_stock)) {
+            _orderQueue->sendPizza(order);
+        } else {
+            _stackPizzasToCook->push(*order);
+            _semPizzasToCook->post();
+        }
         //if not enough, wait
         //else, cook
     }

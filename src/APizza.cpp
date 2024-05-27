@@ -48,6 +48,8 @@ bool APizza::packPizza(std::unordered_map<Ingredient, int> &stock)
         if (stock[ingredient] == 0) {
             return false;
         }
+    }
+    for (auto &ingredient : _ingredients) {
         stock[ingredient] -= 1;
     }
     return true;

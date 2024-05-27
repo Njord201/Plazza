@@ -62,6 +62,12 @@ class MessageQueue {
      */
     APizza *receivePizza();
 
+    /**
+     * @brief Sends a pizza to the message queue.
+     * @param pizza The pizza to be sent.
+     */
+    void sendPizza(APizza *pizza);
+
     private:
     mqd_t _queue; /**< The message queue descriptor. */
 };
