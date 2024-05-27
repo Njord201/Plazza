@@ -98,8 +98,12 @@ std::vector<Plazza::Pizza> InputParser::parseLine(void)
         throw ParserException("Empty line");
 
     std::vector<std::string> tokens = splitString(line, ' ');
+    if (tokens.size() == 1 && tokens[0] == "status")
+        return std::vector<Plazza::Pizza>();
+
     if (tokens.size() % 3 != 0)
         throw ParserException("Invalid number of arguments");
+
 
     std::vector<Plazza::Pizza> pizzas;
     for (size_t i = 0; i < tokens.size(); i += 3) {

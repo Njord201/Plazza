@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include <string>
+
 namespace Plazza {
 
     enum PizzaType {
@@ -47,6 +49,13 @@ class Plazza::Pizza {
          *
          */
         ~Pizza() = default;
+
+        /**
+         * @brief Get the infos of object Pizza.
+         *
+         * @return std::string
+         */
+        std::string getInfos() const;
 
     private:
 

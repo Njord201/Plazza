@@ -22,6 +22,7 @@ SRC_FILES 	=	MessageQueue.cpp			\
 				Pizza.cpp					\
 				SocketUnix/Server.cpp		\
 				SocketUnix/Client.cpp		\
+				Reception/Reception.cpp		\
 
 SRC_DIR 	=	src/
 SRC		=	$(addprefix $(SRC_DIR), $(SRC_FILES))
@@ -44,7 +45,7 @@ NAME 	=	plazza
 
 # Flags
 IFLAGS 	=	-I./include
-CFLAGS 	=	-Wall -Wextra -Werror
+CFLAGS 	=	-Wall -Wextra -Werror -g
 
 # Compiler
 CC = g++

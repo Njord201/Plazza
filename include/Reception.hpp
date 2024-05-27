@@ -14,6 +14,7 @@
 #include "Kitchen.hpp"
 #include "Input.hpp"
 #include "Order.hpp"
+#include "SocketUnix/Server.hpp"
 
 namespace Plazza {
 
@@ -71,7 +72,7 @@ class Plazza::Reception {
          * @brief Assign a pizza to a kitchen.
          *
          */
-        void assignPizzaToKitchen(int idKitchen);
+        void assignPizzaToKitchen(int idKitchen, const Plazza::Pizza &pizza);
 
         /**
          * @brief Get the state of the kitchens.
@@ -85,8 +86,11 @@ class Plazza::Reception {
          */
         void sortStateKitchens();
 
-        std::vector<std::shared_ptr<Kitchen>>   _kitchens;      /** Lists of Kitchens handle by the reception */
+        void status();
+
+        std::vector<std::pair<int, int>>        _kitchens;      /** Lists of id and fd of Kitchens handle by the reception */
         std::vector<std::shared_ptr<Order>>     _orders;        /** Lists of the current order */
-        InputParser                             _input;         /** Parser of the user input */
+        std::unique_ptr<InputParser>                             _input;         /** Parser of the user input */
         std::vector<std::pair<int, int>>        _stateKitchens; /** State of the kitchens, <id, empty pizza slot> */
+        std::unique_ptr<SocketU::Server>        _server;        /** Server to communicate with the client */
 };

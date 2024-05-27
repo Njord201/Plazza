@@ -7,6 +7,7 @@
 
 #include "PlazzaParser.hpp"
 #include "Input.hpp"
+#include "Reception.hpp"
 
 #include <iostream>
 
@@ -19,14 +20,8 @@ int main(int ac, char **av)
         return 84;
     }
 
-    Plazza::InputParser parser = Plazza::InputParser();
-    while (1) {
-        try {
-            parser.parseLine();
-        } catch (const std::exception &e) {
-            std::cerr << e.what() << std::endl;
-        }
-    }
+    Plazza::Reception reception;
+    reception.run();
 
     return 0;
 }
