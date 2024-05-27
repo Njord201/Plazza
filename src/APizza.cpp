@@ -6,6 +6,9 @@
 */
 
 #include "APizza.hpp"
+#include <thread>
+#include <iostream>
+#include <unordered_map>
 
 Plazza::APizza::APizza() {
     _type = Regina;
@@ -58,5 +61,5 @@ bool Plazza::APizza::packPizza(std::unordered_map<Ingredient, int> &stock)
 
 void Plazza::APizza::cook()
 {
-    sleep(_cookingTime);
+    std::this_thread::sleep_for(std::chrono::seconds(_cookingTime));
 }
