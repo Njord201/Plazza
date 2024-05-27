@@ -9,6 +9,8 @@
 
 static void *cookFunction(void *arg)
 {
+    //std::cout << "Cook nb " << ((CookArgs *)arg)->getId() << " started" << std::endl;
+
     return arg;
 }
 
@@ -19,7 +21,7 @@ Kitchen::Kitchen(int nbCooks, long restockTime, int id)
 
     _cooks = std::list<std::unique_ptr<Thread>>();
     for (int i = 0; i < nbCooks; i++) {
-        _cooks.push_back(std::make_unique<Thread>(&cookFunction, nullptr));
+        _cooks.push_back(std::make_unique<Thread>(&cookFunction, (void *) new CookArgs(i, std::make_unique<Semaphore>(0), std::make_unique<Stack<APizza>>(), std::make_unique<Mutex>())));
     }
     int i = 0;
     while (i < Ingredient::INGREDIENTS) {

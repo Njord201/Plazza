@@ -18,6 +18,7 @@
 #include "MessageQueue.hpp"
 #include "Stack.hpp"
 #include "APizza.hpp"
+#include "CookArgs.hpp"
 
 class Kitchen {
 public:
