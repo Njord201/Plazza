@@ -49,7 +49,6 @@ void Plazza::Reception::run()
         try {
             if (FD_ISSET(0, &_server->_readfds)) {
                 pizzas = _input->parseLine();
-                _kitchens.Msg
             }
             for (const auto &kitchen : _kitchens) {
                 if (FD_ISSET(kitchen.second, &_server->_readfds)) {
