@@ -9,6 +9,7 @@
 
 #include <mqueue.h>
 #include <cstring>
+#include "APizza.hpp"
 
 /**
  * @class MessageQueue
@@ -48,6 +49,18 @@ class MessageQueue {
      * @brief Closes the message queue.
      */
     void closeQueue();
+
+    /**
+     * @brief Gets the size of the message queue.
+     * @return The size of the message queue.
+     */
+    int size();
+
+    /**
+     * @brief Receives a pizza from the message queue.
+     * @return A pointer to the received pizza.
+     */
+    APizza *receivePizza();
 
     private:
     mqd_t _queue; /**< The message queue descriptor. */

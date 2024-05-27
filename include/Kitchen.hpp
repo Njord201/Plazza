@@ -28,7 +28,7 @@ public:
      * @param restockTime The time interval for restocking ingredients.
      * @param id The ID of the kitchen.
      */
-    Kitchen(int nbCooks, int restockTime, int id);
+    Kitchen(int nbCooks, long restockTime, int id);
 
     /**
      * @brief Destroys the Kitchen object.
@@ -44,7 +44,11 @@ public:
 
     //internal functions
 
-    void loop();
+    /**
+     * @brief The main loop of the kitchen.
+     * @return 1 if the kitchen needs to be killed, 0 otherwise.
+     */
+    int loop();
 
     //communication functions
 
@@ -61,7 +65,7 @@ private:
     int _cooksOccupied; /**< The number of cooks currently occupied. */ //shared memory? -> Socket UNIX?
     bool _saturated; /**< Indicates if the kitchen is saturated. */ //shared memory? -> Socket UNIX?
 
-    int _restockTime; /**< The time interval for restocking ingredients. */
+    long _restockTime; /**< The time interval for restocking ingredients in milliseconds. */
     int _id; /**< The ID of the kitchen. */
 
     std::unique_ptr<Timer> _refillTime; /**< The timer for tracking refill time. */

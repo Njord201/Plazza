@@ -39,7 +39,21 @@ void *MessageQueue::receiveMessage()
     return message;
 }
 
+APizza *MessageQueue::receivePizza()
+{
+    char *message = new char[8192];
+    mq_receive(_queue, message, 8192, 0);
+    return reinterpret_cast<APizza *>(message);
+}
+
 void MessageQueue::closeQueue()
 {
     mq_close(_queue);
+}
+
+int MessageQueue::size()
+{
+    struct mq_attr attr;
+    mq_getattr(_queue, &attr);
+    return attr.mq_curmsgs;
 }

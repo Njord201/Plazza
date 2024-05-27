@@ -40,8 +40,10 @@ public:
 
     /**
      * @brief Packs the pizza.
+     * @param stock The stock of ingredients.
+     * @return True if the pizza was packed successfully, false otherwise.
      */
-    void packPizza();
+    bool packPizza(std::unordered_map<Ingredient, int> &stock);
 
     /**
      * @brief Cooks the pizza.

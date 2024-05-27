@@ -7,6 +7,9 @@
 
 #pragma once
 
+#include <unordered_map>
+#include "Ingredient.hpp"
+
 /**
  * @enum PizzaType
  * @brief Enumeration representing the types of pizza.
@@ -45,8 +48,10 @@ public:
 
     /**
      * @brief Packs the pizza.
+     * @param stock The stock of ingredients.
+     * @return True if the pizza was packed successfully, false otherwise.
      */
-    virtual void packPizza() = 0;
+    virtual bool packPizza(std::unordered_map<Ingredient, int> &stock) = 0;
 
     /**
      * @brief Cooks the pizza.

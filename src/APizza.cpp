@@ -41,9 +41,16 @@ std::vector<Ingredient> APizza::getIngredients() const
     return _ingredients;
 }
 
-void APizza::packPizza()
+bool APizza::packPizza(std::unordered_map<Ingredient, int> &stock)
 {
     std::cout << "Packing pizza..." << std::endl;
+    for (auto &ingredient : _ingredients) {
+        if (stock[ingredient] == 0) {
+            return false;
+        }
+        stock[ingredient] -= 1;
+    }
+    return true;
 }
 
 void APizza::cook()

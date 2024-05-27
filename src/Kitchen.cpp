@@ -12,7 +12,7 @@ static void *cookFunction(void *arg)
     return arg;
 }
 
-Kitchen::Kitchen(int nbCooks, int restockTime, int id)
+Kitchen::Kitchen(int nbCooks, long restockTime, int id)
 {
     _id = id;
     _restockTime = restockTime;
@@ -38,24 +38,36 @@ Kitchen::Kitchen(int nbCooks, int restockTime, int id)
     _idleTime = std::make_unique<Timer>();
 }
 
-Kitchen::~Kitchen()
-{
-
+Kitchen::~Kitchen() {
+    std::cout << "Kitchen " << _id << " destroyed" << std::endl;
 }
 
 void Kitchen::restock()
 {
+    std::cout << "Refill ingredients" << std::endl;
     for (auto &ingredient : _stock) {
         ingredient.second += 1;
     }
 }
 
-/*void Kitchen::loop()
+int Kitchen::loop()
 {
     //timers
-    if (_refillTime->getElapsedTime() > _restockTime) {
+    if (_refillTime->elapsedMilliseconds() > _restockTime) {
         restock();
         _refillTime->reset();
     }
-    //get si quelque chose dans la msg queue
-}*/
+    if (_idleTime->elapsedSeconds() > 5) {
+        return 1;
+    }
+    if (_orderQueue->size() > 0) {
+        //get order
+        APizza *order = _orderQueue->receivePizza();
+
+        //check if enough ingredients
+        order->packPizza(_stock);
+        //if not enough, wait
+        //else, cook
+    }
+    return 0;
+}
