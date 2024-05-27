@@ -19,6 +19,7 @@
 #include "Stack.hpp"
 #include "APizza.hpp"
 #include "CookArgs.hpp"
+#include "SocketUnix/Client.hpp"
 
 class Kitchen {
 public:
@@ -43,7 +44,7 @@ public:
 
     //getters and setters
 
-    std::unique_ptr<MessageQueue> &getOrderQueue() { return _orderQueue; }
+    std::shared_ptr<MessageQueue> &getOrderQueue() { return _orderQueue; }
 
     //internal functions
 
@@ -57,11 +58,11 @@ public:
 
 private:
     std::list<std::unique_ptr<Thread>> _cooks; /**< The list of cook threads. */
-    std::unique_ptr<Mutex> _startCooking; /**< The mutex for synchronizing cook threads. */
-    std::unique_ptr<MessageQueue> _orderQueue; /**< The message queue for receiving orders. */
-    std::unique_ptr<MessageQueue> _finishedPizzasQueue; /**< The message queue for sending finished pizzas. */
-    std::unique_ptr<Semaphore> _semPizzasToCook; /**< The semaphore for tracking pizzas to cook. */
-    std::unique_ptr<Stack<Plazza::APizza>> _stackPizzasToCook; /**< The stack of pizzas to cook. */
+    std::shared_ptr<Mutex> _startCooking; /**< The mutex for synchronizing cook threads. */
+    std::shared_ptr<MessageQueue> _orderQueue; /**< The message queue for receiving orders. */
+    std::shared_ptr<MessageQueue> _finishedPizzasQueue; /**< The message queue for sending finished pizzas. */
+    std::shared_ptr<Semaphore> _semPizzasToCook; /**< The semaphore for tracking pizzas to cook. */
+    std::shared_ptr<Stack<Plazza::APizza>> _stackPizzasToCook; /**< The stack of pizzas to cook. */
 
     std::unordered_map<Ingredient, int> _stock; /**< The map of ingredient stock. */
     int _totalPizzas; /**< The total number of pizzas cooked. */
@@ -73,4 +74,6 @@ private:
 
     std::unique_ptr<Timer> _refillTime; /**< The timer for tracking refill time. */
     std::unique_ptr<Timer> _idleTime; /**< The timer for tracking idle time. */
+
+    SocketU::Client _client; /**< The client socket for communication with the reception. */
 };

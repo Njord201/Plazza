@@ -10,7 +10,8 @@
 Plazza::APizza::APizza() {
     _type = Regina;
     _size = S;
-    _cookingTime = 1;
+    _cookingTime = 2;
+    _ingredients = {Ingredient::DOUGH, Ingredient::TOMATO, Ingredient::GRUYERE, Ingredient::HAM, Ingredient::MUSHROOMS};
 }
 
 Plazza::APizza::APizza(Plazza::PizzaType type, Plazza::PizzaSize size, std::vector<Ingredient> ingredients, int cookingTime)

@@ -37,6 +37,12 @@ void Semaphore::post()
     sem_post(&_sem);
 }
 
+void Semaphore::post(int value)
+{
+    for (int i = 0; i < value; i++)
+        sem_post(&_sem);
+}
+
 void Semaphore::trywait()
 {
     sem_trywait(&_sem);

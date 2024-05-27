@@ -51,6 +51,13 @@ public:
     void post();
 
     /**
+     * @brief Increments the semaphore value by a specified amount.
+     *
+     * @param value The amount to increment the semaphore value by.
+     */
+    void post(int value);
+
+    /**
      * @brief Tries to decrement the semaphore value by one.
      * @return 0 if the decrement was successful, -1 otherwise.
      */

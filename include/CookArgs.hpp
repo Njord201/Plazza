@@ -16,8 +16,8 @@
 
 class CookArgs {
 public:
-    CookArgs(int id, std::unique_ptr<Semaphore> sem, std::unique_ptr<Stack<Plazza::APizza>> stack, std::unique_ptr<Mutex> mutex, std::unique_ptr<MessageQueue> finishedPizzasQueue)
-        : _id{id}, _sem{std::move(sem)}, _stack{std::move(stack)}, _mutex{std::move(mutex)}, _finishedPizzasQueue{std::move(finishedPizzasQueue)} {}
+    CookArgs(int id, std::shared_ptr<Semaphore> sem, std::shared_ptr<Stack<Plazza::APizza>> stack, std::shared_ptr<Mutex> mutex, std::shared_ptr<MessageQueue> finishedPizzasQueue)
+        : _id{id}, _sem{sem}, _stack{stack}, _mutex{mutex}, _finishedPizzasQueue{finishedPizzasQueue} {}
     ~CookArgs() = default;
 
     //getters
@@ -30,8 +30,8 @@ public:
 
 private:
     int _id;
-    std::unique_ptr<Semaphore> _sem;
-    std::unique_ptr<Stack<Plazza::APizza>> _stack;
-    std::unique_ptr<Mutex> _mutex;
-    std::unique_ptr<MessageQueue> _finishedPizzasQueue;
+    std::shared_ptr<Semaphore> _sem;
+    std::shared_ptr<Stack<Plazza::APizza>> _stack;
+    std::shared_ptr<Mutex> _mutex;
+    std::shared_ptr<MessageQueue> _finishedPizzasQueue;
 };
