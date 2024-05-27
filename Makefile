@@ -10,18 +10,19 @@ MAIN		=	src/main.cpp
 MAIN_OBJ	=	$(MAIN:.cpp=.o)
 
 # Sources
-SRC_FILES 	=	Utils/MessageQueue.cpp \
-				Utils/Mutex.cpp \
-				Utils/Semaphore.cpp \
-				Utils/Stack.cpp \
-				Utils/Timer.cpp \
-				Utils/Thread.cpp \
-				APizza.cpp \
-        		Parsing/Plazza.cpp	\
-				Parsing/Input.cpp	\
-				Kitchen.cpp			\
-				SocketUnix/Server.cpp	\
-				SocketUnix/Client.cpp	\
+SRC_FILES 	=	APizza.cpp 					\
+        		Parsing/PlazzaParser.cpp	\
+				Parsing/Input.cpp			\
+				SocketUnix/Server.cpp		\
+				SocketUnix/Client.cpp		\
+				Reception/Reception.cpp		\
+				Utils/MessageQueue.cpp 		\
+				Utils/Mutex.cpp 			\
+				Utils/Semaphore.cpp 		\
+				Utils/Stack.cpp 			\
+				Utils/Timer.cpp 			\
+				Utils/Thread.cpp 			\
+				Kitchen.cpp					\
 
 
 SRC_DIR 	=	src/
@@ -45,7 +46,7 @@ NAME 	=	plazza
 
 # Flags
 IFLAGS 	=	-I./include
-CFLAGS 	=	-Wall -Wextra -Werror
+CFLAGS 	=	-Wall -Wextra -Werror -g
 
 # Compiler
 CC = g++

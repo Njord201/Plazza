@@ -18,10 +18,9 @@
 #include "MessageQueue.hpp"
 #include "Stack.hpp"
 #include "APizza.hpp"
-#include "CookArgs.hpp"
 #include "SocketUnix/Client.hpp"
 
-class Kitchen {
+class Kitchen : public std::enable_shared_from_this<Kitchen> {
 public:
     /**
      * @brief Constructs a Kitchen object.
@@ -42,35 +41,41 @@ public:
      */
     void restock();
 
-    //getters and setters
-
+    // Getters and setters
     std::shared_ptr<MessageQueue> &getOrderQueue() { return _orderQueue; }
+    std::shared_ptr<MessageQueue> &getFinishedPizzasQueue() { return _finishedPizzasQueue; }
+    std::shared_ptr<Stack<Plazza::APizza>> &getStackPizzasToCook() { return _stackPizzasToCook; }
+    std::shared_ptr<Mutex> &getStartCooking() { return _startCooking; }
+    std::unordered_map<Ingredient, int> &getStock() { return _stock; }
+    int getTotalPizzas() const { return _totalPizzas; }
+    int getCooksOccupied() const { return _cooksOccupied; }
+    bool isSaturated() const { return _saturated; }
+    long getRestockTime() const { return _restockTime; }
+    int getId() const { return _id; }
+    bool isRunning() const { return _running; }
 
-    //internal functions
-
+    // Internal functions
     /**
      * @brief The main loop of the kitchen.
      * @return 1 if the kitchen needs to be killed, 0 otherwise.
      */
     int loop();
 
-    //communication functions
-
 private:
     std::list<std::unique_ptr<Thread>> _cooks; /**< The list of cook threads. */
     std::shared_ptr<Mutex> _startCooking; /**< The mutex for synchronizing cook threads. */
     std::shared_ptr<MessageQueue> _orderQueue; /**< The message queue for receiving orders. */
     std::shared_ptr<MessageQueue> _finishedPizzasQueue; /**< The message queue for sending finished pizzas. */
-    std::shared_ptr<Semaphore> _semPizzasToCook; /**< The semaphore for tracking pizzas to cook. */
     std::shared_ptr<Stack<Plazza::APizza>> _stackPizzasToCook; /**< The stack of pizzas to cook. */
 
     std::unordered_map<Ingredient, int> _stock; /**< The map of ingredient stock. */
     int _totalPizzas; /**< The total number of pizzas cooked. */
-    int _cooksOccupied; /**< The number of cooks currently occupied. */ //shared memory? -> Socket UNIX?
-    bool _saturated; /**< Indicates if the kitchen is saturated. */ //shared memory? -> Socket UNIX?
+    int _cooksOccupied; /**< The number of cooks currently occupied. */
+    bool _saturated; /**< Indicates if the kitchen is saturated. */
 
     long _restockTime; /**< The time interval for restocking ingredients in milliseconds. */
     int _id; /**< The ID of the kitchen. */
+    bool _running; /**< Indicates if the kitchen is running. */
 
     std::unique_ptr<Timer> _refillTime; /**< The timer for tracking refill time. */
     std::unique_ptr<Timer> _idleTime; /**< The timer for tracking idle time. */

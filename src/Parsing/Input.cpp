@@ -92,6 +92,9 @@ std::vector<Plazza::APizza> InputParser::parseLine(void)
         throw ParserException("Empty line");
 
     std::vector<std::string> tokens = splitString(line, ' ');
+    if (tokens.size() == 1 && tokens[0] == "status")
+        return std::vector<Plazza::APizza>();
+
     if (tokens.size() % 3 != 0)
         throw ParserException("Invalid number of arguments");
 

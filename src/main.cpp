@@ -5,8 +5,9 @@
 ** main
 */
 
-#include "Plazza.hpp"
+#include "PlazzaParser.hpp"
 #include "Input.hpp"
+#include "Reception.hpp"
 #include "Kitchen.hpp"
 
 #include <iostream>
@@ -22,22 +23,8 @@ int main(int ac, char **av)
     }
     Kitchen kitchen(2, 2000, 0);
 
-    int pid = fork();
+    Plazza::Reception reception;
+    reception.run();
 
-    if (pid == 0) {
-        while(kitchen.loop() == 0);
-    } else {
-        Plazza::InputParser parser = Plazza::InputParser();
-
-        //debug
-        kitchen.getOrderQueue()->sendPizza(new Plazza::APizza());
-        while (1) {
-            try {
-                parser.parseLine();
-            } catch (const std::exception &e) {
-                std::cerr << e.what() << std::endl;
-            }
-        }
-    }
     return 0;
 }

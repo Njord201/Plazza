@@ -77,6 +77,13 @@ namespace Plazza {
          */
         int getCookingTime() const;
 
+        /**
+         * @brief Get the infos of the pizza.
+         *
+         * @return std::string The infos of the pizza.
+         */
+        std::string getInfos() const;
+
     private:
         PizzaType _type; /**< The type of the pizza. */
         PizzaSize _size; /**< The size of the pizza. */

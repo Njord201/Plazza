@@ -6,63 +6,61 @@
 */
 
 #include "Kitchen.hpp"
+#include "CookArgs.hpp"
 
 static void *cookFunction(void *arg) {
-    /*auto cookArgs = static_cast<CookArgs*>(arg);
+    auto cookArgs = static_cast<CookArgs*>(arg);
 
     std::cout << "Cook nb " << cookArgs->getId() << " started" << std::endl;
-    while (true) {
-        cookArgs->getMutex()->lock();
-        cookArgs->getSem()->wait();
-        if (cookArgs->getStack()->size() == 0) {
-            cookArgs->getMutex()->unlock();
-            continue;
-        }
-        Plazza::APizza pizza = cookArgs->getStack()->pop();
+    while (cookArgs->getKitchen()->isRunning()) {
+        std::cout << "i can start cooking" << std::endl;
+        cookArgs->getKitchen()->getStartCooking()->lock();
+        std::cout << "waiting for pizza to cook" << std::endl;
+        while (cookArgs->getKitchen()->getStackPizzasToCook()->size() == 0);
+        Plazza::APizza pizza = cookArgs->getKitchen()->getStackPizzasToCook()->pop();
         std::cout << "Cook nb " << cookArgs->getId() << " cooking " << pizza.getType() << std::endl;
-        cookArgs->getMutex()->unlock();
-        cookArgs->getSem()->post();
+        cookArgs->getKitchen()->getStartCooking()->unlock();
         pizza.cook();
-        cookArgs->getFinishedPizzasQueue()->sendPizza(&pizza);
-    }*/
-    return arg;
+        cookArgs->getKitchen()->getFinishedPizzasQueue()->sendPizza(&pizza);
+    }
+    return nullptr;
 }
 
-
 Kitchen::Kitchen(int nbCooks, long restockTime, int id)
+    : _restockTime(restockTime), _id(id), _running(true)
 {
-    _id = id;
-    _restockTime = restockTime;
-
-    _cooks = std::list<std::unique_ptr<Thread>>();
-    for (int i = 0; i < nbCooks; i++) {
-        _cooks.push_back(std::make_unique<Thread>(&cookFunction, (void *) new CookArgs(i, _semPizzasToCook, _stackPizzasToCook, _startCooking, _finishedPizzasQueue)));
-    }
-    int i = 0;
-    while (i < Ingredient::INGREDIENTS) {
-        _stock.insert(std::pair<Ingredient, int>((Ingredient)i, 5));
-        i++;
-    }
     _startCooking = std::make_shared<Mutex>();
     _orderQueue = std::make_shared<MessageQueue>();
     _finishedPizzasQueue = std::make_shared<MessageQueue>();
-    _semPizzasToCook = std::make_shared<Semaphore>(2 * nbCooks);
-    _semPizzasToCook->post(2 * nbCooks);
     _stackPizzasToCook = std::make_shared<Stack<Plazza::APizza>>();
     _totalPizzas = 0;
     _cooksOccupied = 0;
     _saturated = false;
     _refillTime = std::make_unique<Timer>();
     _idleTime = std::make_unique<Timer>();
+
+    _cooks = std::list<std::unique_ptr<Thread>>();
+
+    for (int i = 0; i < nbCooks; i++) {
+        _cooks.push_back(std::make_unique<Thread>(&cookFunction, new CookArgs(i, this)));
+    }
+
+    for (int i = 0; i < Ingredient::INGREDIENTS; i++) {
+        _stock.insert(std::make_pair(static_cast<Ingredient>(i), 5));
+    }
 }
 
 Kitchen::~Kitchen() {
+    _running = false;
+    for (auto &cook : _cooks) {
+        cook->joinThread();
+    }
     std::cout << "Kitchen " << _id << " destroyed" << std::endl;
 }
 
 void Kitchen::restock()
 {
-    std::cout << "Refill ingredients" << std::endl;
+    // std::cout << "Refill ingredients" << std::endl;
     for (auto &ingredient : _stock) {
         ingredient.second += 1;
     }
@@ -86,10 +84,13 @@ int Kitchen::loop()
 
         //check if enough ingredients
         if (!order->packPizza(_stock)) {
+            std::cout << "not enough ingredients" << std::endl;
             _orderQueue->sendPizza(order);
         } else {
+            std::cout << "pushing pizza to cook" << std::endl;
+            std::cout << "stack size: " << _stackPizzasToCook->size() << std::endl;
             _stackPizzasToCook->push(*order);
-            _semPizzasToCook->post();
+            std::cout << "stack size: " << _stackPizzasToCook->size() << std::endl;
         }
     }
     //std::cout << "Kitchen " << _id << " is cooking " << _stackPizzasToCook->size() << " pizzas" << std::endl;
