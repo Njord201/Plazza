@@ -30,7 +30,7 @@ int main(int ac, char **av)
         Plazza::InputParser parser = Plazza::InputParser();
 
         //debug
-        kitchen.getOrderQueue()->sendPizza(new APizza());
+        kitchen.getOrderQueue()->sendPizza(new Plazza::APizza());
         while (1) {
             try {
                 parser.parseLine();

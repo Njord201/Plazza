@@ -19,7 +19,6 @@ SRC_FILES 	=	Utils/MessageQueue.cpp \
 				APizza.cpp \
         		Parsing/Plazza.cpp	\
 				Parsing/Input.cpp	\
-				Pizza.cpp			\
 				Kitchen.cpp			\
 				SocketUnix/Server.cpp	\
 				SocketUnix/Client.cpp	\

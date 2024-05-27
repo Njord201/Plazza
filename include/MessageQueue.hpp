@@ -60,13 +60,13 @@ class MessageQueue {
      * @brief Receives a pizza from the message queue.
      * @return A pointer to the received pizza.
      */
-    APizza *receivePizza();
+    Plazza::APizza *receivePizza();
 
     /**
      * @brief Sends a pizza to the message queue.
      * @param pizza The pizza to be sent.
      */
-    void sendPizza(APizza *pizza);
+    void sendPizza(Plazza::APizza *pizza);
 
     private:
     mqd_t _queue; /**< The message queue descriptor. */

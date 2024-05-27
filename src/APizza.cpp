@@ -7,13 +7,13 @@
 
 #include "APizza.hpp"
 
-APizza::APizza() {
+Plazza::APizza::APizza() {
     _type = Regina;
     _size = S;
     _cookingTime = 1;
 }
 
-APizza::APizza(PizzaType type, PizzaSize size, std::vector<Ingredient> ingredients, int cookingTime)
+Plazza::APizza::APizza(Plazza::PizzaType type, Plazza::PizzaSize size, std::vector<Ingredient> ingredients, int cookingTime)
 {
     _type = type;
     _size = size;
@@ -21,27 +21,27 @@ APizza::APizza(PizzaType type, PizzaSize size, std::vector<Ingredient> ingredien
     _cookingTime = cookingTime;
 }
 
-PizzaType APizza::getType() const
+Plazza::PizzaType Plazza::APizza::getType() const
 {
     return _type;
 }
 
-PizzaSize APizza::getSize() const
+Plazza::PizzaSize Plazza::APizza::getSize() const
 {
     return _size;
 }
 
-int APizza::getCookingTime() const
+int Plazza::APizza::getCookingTime() const
 {
     return _cookingTime;
 }
 
-std::vector<Ingredient> APizza::getIngredients() const
+std::vector<Ingredient> Plazza::APizza::getIngredients() const
 {
     return _ingredients;
 }
 
-bool APizza::packPizza(std::unordered_map<Ingredient, int> &stock)
+bool Plazza::APizza::packPizza(std::unordered_map<Ingredient, int> &stock)
 {
     std::cout << "Packing pizza..." << std::endl;
     for (auto &ingredient : _ingredients) {
@@ -55,7 +55,7 @@ bool APizza::packPizza(std::unordered_map<Ingredient, int> &stock)
     return true;
 }
 
-void APizza::cook()
+void Plazza::APizza::cook()
 {
-    std::cout << "Cooking pizza..." << std::endl;
+    sleep(_cookingTime);
 }

@@ -39,16 +39,16 @@ void *MessageQueue::receiveMessage()
     return message;
 }
 
-APizza *MessageQueue::receivePizza()
+Plazza::APizza *MessageQueue::receivePizza()
 {
     char *message = new char[8192];
     mq_receive(_queue, message, 8192, 0);
-    return reinterpret_cast<APizza *>(message);
+    return reinterpret_cast<Plazza::APizza *>(message);
 }
 
-void MessageQueue::sendPizza(APizza *pizza)
+void MessageQueue::sendPizza(Plazza::APizza *pizza)
 {
-    mq_send(_queue, reinterpret_cast<char *>(pizza), sizeof(APizza), 0);
+    mq_send(_queue, reinterpret_cast<char *>(pizza), sizeof(Plazza::APizza), 0);
 }
 
 void MessageQueue::closeQueue()

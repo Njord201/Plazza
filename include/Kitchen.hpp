@@ -61,7 +61,7 @@ private:
     std::unique_ptr<MessageQueue> _orderQueue; /**< The message queue for receiving orders. */
     std::unique_ptr<MessageQueue> _finishedPizzasQueue; /**< The message queue for sending finished pizzas. */
     std::unique_ptr<Semaphore> _semPizzasToCook; /**< The semaphore for tracking pizzas to cook. */
-    std::unique_ptr<Stack<APizza>> _stackPizzasToCook; /**< The stack of pizzas to cook. */
+    std::unique_ptr<Stack<Plazza::APizza>> _stackPizzasToCook; /**< The stack of pizzas to cook. */
 
     std::unordered_map<Ingredient, int> _stock; /**< The map of ingredient stock. */
     int _totalPizzas; /**< The total number of pizzas cooked. */

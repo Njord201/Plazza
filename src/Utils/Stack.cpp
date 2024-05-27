@@ -48,4 +48,4 @@ int Stack<T>::size() {
 }
 
 template class Stack<int>;
-template class Stack<APizza>;
+template class Stack<Plazza::APizza>;
