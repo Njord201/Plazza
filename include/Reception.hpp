@@ -72,7 +72,7 @@ class Plazza::Reception {
          * @brief Assign a pizza to a kitchen.
          *
          */
-        void assignPizzaToKitchen(int idKitchen, const Plazza::Pizza &pizza);
+        void assignPizzaToKitchen(int idKitchen, const Plazza::APizza &pizza);
 
         /**
          * @brief Get the state of the kitchens.

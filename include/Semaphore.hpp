@@ -31,6 +31,11 @@ public:
     Semaphore(unsigned int value);
 
     /**
+     * @brief Constructs a Semaphore object.
+     */
+    Semaphore();
+
+    /**
      * @brief Destructs the Semaphore object.
      */
     ~Semaphore();
@@ -44,6 +49,13 @@ public:
      * @brief Increments the semaphore value by one.
      */
     void post();
+
+    /**
+     * @brief Increments the semaphore value by a specified amount.
+     *
+     * @param value The amount to increment the semaphore value by.
+     */
+    void post(int value);
 
     /**
      * @brief Tries to decrement the semaphore value by one.

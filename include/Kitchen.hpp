@@ -8,6 +8,7 @@
 #pragma once
 
 #include <list>
+#include <memory>
 #include <unordered_map>
 #include "Mutex.hpp"
 #include "Thread.hpp"
@@ -16,7 +17,9 @@
 #include "Semaphore.hpp"
 #include "MessageQueue.hpp"
 #include "Stack.hpp"
-#include "IPizza.hpp"
+#include "APizza.hpp"
+#include "CookArgs.hpp"
+#include "SocketUnix/Client.hpp"
 
 class Kitchen {
 public:
@@ -27,7 +30,7 @@ public:
      * @param restockTime The time interval for restocking ingredients.
      * @param id The ID of the kitchen.
      */
-    Kitchen(int nbCooks, int restockTime, int id);
+    Kitchen(int nbCooks, long restockTime, int id);
 
     /**
      * @brief Destroys the Kitchen object.
@@ -39,43 +42,38 @@ public:
      */
     void restock();
 
-    /**
-     * @brief The function executed by each cook thread.
-     *
-     * @param arg The argument passed to the cook thread.
-     * @return void* The return value of the cook thread.
-     */
-    void *cookFunction(void *arg);
-
-    /**
-     * @brief Get the id of the object.
-     *
-     * @return int
-     */
-    int getId() const;
-
     //getters and setters
 
+    std::shared_ptr<MessageQueue> &getOrderQueue() { return _orderQueue; }
+
     //internal functions
+
+    /**
+     * @brief The main loop of the kitchen.
+     * @return 1 if the kitchen needs to be killed, 0 otherwise.
+     */
+    int loop();
 
     //communication functions
 
 private:
-    std::list<Thread> _cooks; /**< The list of cook threads. */
-    Mutex _startCooking; /**< The mutex for synchronizing cook threads. */
-    MessageQueue _orderQueue; /**< The message queue for receiving orders. */
-    MessageQueue _finishedPizzasQueue; /**< The message queue for sending finished pizzas. */
-    Semaphore _semPizzasToCook; /**< The semaphore for tracking pizzas to cook. */
-    Stack<IPizza> _stackPizzasToCook; /**< The stack of pizzas to cook. */
+    std::list<std::unique_ptr<Thread>> _cooks; /**< The list of cook threads. */
+    std::shared_ptr<Mutex> _startCooking; /**< The mutex for synchronizing cook threads. */
+    std::shared_ptr<MessageQueue> _orderQueue; /**< The message queue for receiving orders. */
+    std::shared_ptr<MessageQueue> _finishedPizzasQueue; /**< The message queue for sending finished pizzas. */
+    std::shared_ptr<Semaphore> _semPizzasToCook; /**< The semaphore for tracking pizzas to cook. */
+    std::shared_ptr<Stack<Plazza::APizza>> _stackPizzasToCook; /**< The stack of pizzas to cook. */
 
     std::unordered_map<Ingredient, int> _stock; /**< The map of ingredient stock. */
     int _totalPizzas; /**< The total number of pizzas cooked. */
     int _cooksOccupied; /**< The number of cooks currently occupied. */ //shared memory? -> Socket UNIX?
     bool _saturated; /**< Indicates if the kitchen is saturated. */ //shared memory? -> Socket UNIX?
 
-    int _restockTime; /**< The time interval for restocking ingredients. */
+    long _restockTime; /**< The time interval for restocking ingredients in milliseconds. */
     int _id; /**< The ID of the kitchen. */
 
-    Timer _totalTime; /**< The timer for tracking total cooking time (used to refill the stocks). */
-    Timer _idleTime; /**< The timer for tracking idle time. */
+    std::unique_ptr<Timer> _refillTime; /**< The timer for tracking refill time. */
+    std::unique_ptr<Timer> _idleTime; /**< The timer for tracking idle time. */
+
+    SocketU::Client _client; /**< The client socket for communication with the reception. */
 };

@@ -45,7 +45,7 @@ void Plazza::Reception::run()
             FD_SET(kitchen.second, &_server->_readfds);
         }
         _server->selectRead();
-        std::vector<Plazza::Pizza> pizzas;
+        std::vector<Plazza::APizza> pizzas;
         try {
             if (FD_ISSET(0, &_server->_readfds))
                 pizzas = _input->parseLine();
@@ -105,7 +105,7 @@ void Plazza::Reception::closeOrder()
 
 }
 
-void Plazza::Reception::assignPizzaToKitchen(int idKitchen, const Plazza::Pizza &pizza)
+void Plazza::Reception::assignPizzaToKitchen(int idKitchen, const Plazza::APizza &pizza)
 {
     FD_ZERO(&_server->_writefds);
     FD_SET(_kitchens[idKitchen].second, &_server->_writefds);

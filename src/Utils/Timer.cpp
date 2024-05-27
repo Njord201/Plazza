@@ -24,3 +24,10 @@ double Timer::elapsedSeconds() const
     return elapsedTime.count();
 
 }
+
+double Timer::elapsedMilliseconds() const
+{
+    std::chrono::steady_clock::time_point endTime = std::chrono::steady_clock::now();
+    std::chrono::duration<double, std::milli> elapsedTime = endTime - startTime;
+    return elapsedTime.count();
+}

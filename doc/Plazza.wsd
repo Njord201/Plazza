@@ -1,0 +1,42 @@
+@startuml Plazza
+namespace Plazza {
+    class Reception {
+        +Reception()
+        +~Reception()
+        +run()
+        -createKitchen()
+        -createOrder()
+        -closeOrder()
+        -assignPizza()
+        -getStateKitchens()
+        -sortStateKitchens()
+        -_kitchens : std::vector<Kitchen>
+        -_orders : std::vector<Order>
+    }
+
+    class Kitchen {
+        +Kitchen()
+        +~Kitchen()
+    }
+
+    class Order {
+        +Order()
+        +~Order()
+        +getOrder()
+        +setPizzaDone()
+        -_order : std::svector<Pizza>
+    }
+
+    class Pizza {
+        +Pizza()
+        +~Pizza()
+        -_type : PizzaType
+        -_size : PizzaSize
+    }
+}
+
+Reception o-> Kitchen
+Reception o-> Order
+Order o-> Pizza
+
+@enduml

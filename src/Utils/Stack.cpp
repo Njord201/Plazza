@@ -6,6 +6,7 @@
 */
 
 #include "Stack.hpp"
+#include "APizza.hpp"
 
 template <typename T>
 Stack<T>::Stack() : _size(0), _capacity(10), _stack(new T[_capacity]) {}
@@ -47,3 +48,4 @@ int Stack<T>::size() {
 }
 
 template class Stack<int>;
+template class Stack<Plazza::APizza>;
