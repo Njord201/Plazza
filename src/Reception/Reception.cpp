@@ -47,8 +47,10 @@ void Plazza::Reception::run()
         _server->selectRead();
         std::vector<Plazza::APizza> pizzas;
         try {
-            if (FD_ISSET(0, &_server->_readfds))
+            if (FD_ISSET(0, &_server->_readfds)) {
                 pizzas = _input->parseLine();
+                _kitchens.Msg
+            }
             for (const auto &kitchen : _kitchens) {
                 if (FD_ISSET(kitchen.second, &_server->_readfds)) {
                     // A an order gestion system
@@ -70,10 +72,10 @@ void Plazza::Reception::run()
             this->sortStateKitchens();
             if (this->_stateKitchens.empty())
                 this->createKitchen();
-            // if (this->_stateKitchens[0].second == 0)
-            //     this->createKitchen();
-            // this->assignPizzaToKitchen(0, pizza);
-            (void) pizza;
+            this->getStateKitchens();
+            if (!this->_stateKitchens.empty() && this->_stateKitchens[0].second == 0)
+                this->createKitchen();
+            this->assignPizzaToKitchen(0, pizza);
             std::cout << "Pizza assigned\n";
         }
         kitchenAnswer = false;
@@ -82,17 +84,20 @@ void Plazza::Reception::run()
 
 void Plazza::Reception::createKitchen()
 {
-    // auto kitchen = std::make_shared<Kitchen>(2, 5, 1);
+    auto kitchen = std::make_shared<Kitchen>(2, 5, 1);
 
-    // int fd = fork();
+    int fd = fork();
 
-    // if (fd == 0) {
-    //     // kitchen->loop();
-    //     close(fd);
-    // } else {
-    //     auto pair = std::make_pair(kitchen->getId(), fd);
-    //     _kitchens.push_back(pair);
-    // }
+    if (fd == 0) {
+        while (kitchen->loop());
+        std::cout << "Kitchen " << getpid() << " destroyed" << std::endl;
+        close(fd);
+        exit(0);
+    } else {
+        std::cout << "Kitchen created: " << fd << std::endl;
+        auto pair = std::make_pair(fd, fd);
+        _kitchens.push_back(pair);
+    }
 }
 
 void Plazza::Reception::createOrder()
@@ -111,6 +116,7 @@ void Plazza::Reception::assignPizzaToKitchen(int idKitchen, const Plazza::APizza
     FD_SET(_kitchens[idKitchen].second, &_server->_writefds);
     _server->selectWrite();
     _server->send(pizza.getInfos(), _kitchens[idKitchen].second);
+    std::cout << "Pizza sent: " << pizza.getInfos() << std::endl;
 }
 
 void Plazza::Reception::getStateKitchens()
@@ -119,9 +125,10 @@ void Plazza::Reception::getStateKitchens()
         FD_ZERO(&_server->_writefds);
         FD_SET(getpid(), &_server->_readfds);
         _server->selectRead();
-        // std::string state = _server.receive(getpid());
+        std::string state = _server->receive(getpid());
+        std::cout << "State: " << state << std::endl;
         int id = kitchen.first;
-        std::string state = "2";
+        // std::string state = "2";
         int pizzaSlot = stoi(state);
 
         auto pair = std::make_pair(id, pizzaSlot);

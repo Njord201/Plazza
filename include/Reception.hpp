@@ -90,7 +90,7 @@ class Plazza::Reception {
 
         std::vector<std::pair<int, int>>        _kitchens;      /** Lists of id and fd of Kitchens handle by the reception */
         std::vector<std::shared_ptr<Order>>     _orders;        /** Lists of the current order */
-        std::unique_ptr<InputParser>                             _input;         /** Parser of the user input */
+        std::unique_ptr<InputParser>            _input;         /** Parser of the user input */
         std::vector<std::pair<int, int>>        _stateKitchens; /** State of the kitchens, <id, empty pizza slot> */
         std::unique_ptr<SocketU::Server>        _server;        /** Server to communicate with the client */
 };

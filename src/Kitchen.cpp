@@ -62,7 +62,7 @@ Kitchen::~Kitchen() {
 
 void Kitchen::restock()
 {
-    std::cout << "Refill ingredients" << std::endl;
+    // std::cout << "Refill ingredients" << std::endl;
     for (auto &ingredient : _stock) {
         ingredient.second += 1;
     }
