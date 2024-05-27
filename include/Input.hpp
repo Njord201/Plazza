@@ -10,8 +10,11 @@
 #include <string>
 #include <vector>
 #include <exception>
-
-#include "Pizza.hpp"
+#include "APizza.hpp"
+#include "IPizza.hpp"
+#include "Ingredient.hpp"
+#include <iostream>
+#include <sstream>
 
 namespace Plazza {
 
@@ -57,9 +60,9 @@ class Plazza::InputParser {
          * @brief Parse a line of input.
          *
          * @param line The line to parse.
-         * @return Plazza::Pizza The pizza parsed.
+         * @return Plazza::IPizza The parsed line.
          */
-        std::vector<Plazza::Pizza> parseLine(void);
+        std::vector<Plazza::APizza> parseLine(void);
 
         /**
          * @brief Class to handle parsing errors.

@@ -31,6 +31,12 @@ public:
      */
     double elapsedSeconds() const;
 
+    /**
+     * @brief Calculates the elapsed time in milliseconds since the Timer was started.
+     * @return The elapsed time in milliseconds.
+     */
+    double elapsedMilliseconds() const;
+
 private:
     std::chrono::steady_clock::time_point startTime;
 };

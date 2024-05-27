@@ -6,12 +6,6 @@
 */
 
 #include "Input.hpp"
-#include "Pizza.hpp"
-
-#include <iostream>
-#include <sstream>
-#include <vector>
-#include <string>
 
 using InputParser = Plazza::InputParser;
 
@@ -89,7 +83,7 @@ Plazza::PizzaSize InputParser::getPizzaSize(const std::string &size)
     return Plazza::PizzaSize::S;
 }
 
-std::vector<Plazza::Pizza> InputParser::parseLine(void)
+std::vector<Plazza::APizza> InputParser::parseLine(void)
 {
     std::string line;
 
@@ -101,7 +95,7 @@ std::vector<Plazza::Pizza> InputParser::parseLine(void)
     if (tokens.size() % 3 != 0)
         throw ParserException("Invalid number of arguments");
 
-    std::vector<Plazza::Pizza> pizzas;
+    std::vector<Plazza::APizza> pizzas;
     for (size_t i = 0; i < tokens.size(); i += 3) {
         if (!isStringAlpha(tokens[i]))
             throw ParserException("Invalid type");
@@ -117,7 +111,8 @@ std::vector<Plazza::Pizza> InputParser::parseLine(void)
             std::string str = tokens[i + 2].substr(1);
             unsigned int cooks = std::stoul(str);
             for (unsigned int j = 0; j < cooks; j++) {
-                Plazza::Pizza pizza(type, size);
+                //TO DO: ADD INGREDIENTS AND COOKING TIME
+                Plazza::APizza pizza(type, size, std::vector<Ingredient>(), 1);
                 pizzas.push_back(pizza);
             }
         } catch (std::exception &e) {
