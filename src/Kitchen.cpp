@@ -13,12 +13,12 @@ static void *cookFunction(void *arg) {
 
     std::cout << "Cook nb " << cookArgs->getId() << " started" << std::endl;
     while (cookArgs->getKitchen()->isRunning()) {
-        std::cout << "i can start cooking" << std::endl;
+        // std::cout << "i can start cooking" << std::endl;
         cookArgs->getKitchen()->getStartCooking()->lock();
         std::cout << "waiting for pizza to cook" << std::endl;
         while (cookArgs->getKitchen()->getStackPizzasToCook()->size() == 0);
         Plazza::APizza pizza = cookArgs->getKitchen()->getStackPizzasToCook()->pop();
-        std::cout << "Cook nb " << cookArgs->getId() << " cooking " << pizza.getType() << std::endl;
+        // std::cout << "Cook nb " << cookArgs->getId() << " cooking " << pizza.getType() << std::endl;
         cookArgs->getKitchen()->getStartCooking()->unlock();
         pizza.cook();
         cookArgs->getKitchen()->getFinishedPizzasQueue()->sendPizza(&pizza);
